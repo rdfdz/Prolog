@@ -1,21 +1,5 @@
 :-module(_,_).
 
-arbolBalanceadoPar(void).
-arbolBalanceadoPar(tree(par(_,_),Left,Right)):-
-	leaf(Left,Res1),
-	leaf(Right,Res2),
-	cmp(Res1,Res2).
-
-cmp(X,Y):- X\=Y.
-
-leaf(void,_).
-leaf(tree(par(_,N1),Left,Right),RES):-
-	leaf(Left,Acc),
-	leaf(Right,Acc),
-	plus(Acc,N1,RES).
-
-
-equals(A,B):-A=B.
 nat(0).
 nat(s(X)):-nat(X).
 
@@ -34,15 +18,33 @@ times(X,0,0):-nat(X).
 times(X,s(Y),Z):- times(X,Y,Acc), plus(Acc,X,Z).
 
 
-arbolAmplificado(tree(par(S,N),Left,Right),AAmp):-
-	tree(Left,N,L1),
-	tree(Right,N,L2),
-	AAmp = tree(par(S,N),L1,L2).
 
-tree(void,_,void).
-tree(tree(par(X,N),L,R),Root,AAmp):-
-	tree(L,Root,L1),
-	tree(R,Root,L2),
+% arbolBalanceadoPar/1 
+arbolBalanceadoPar(void).
+arbolBalanceadoPar(tree(par(_,_),Left,Right)):-
+	leaf(Left,Res1),
+	leaf(Right,Res2),
+	cmp(Res1,Res2).
+
+leaf(void,_).
+leaf(tree(par(_,N1),Left,Right),RES):-
+	leaf(Left,Acc),
+	leaf(Right,Acc),
+	plus(Acc,N1,RES).
+
+cmp(X,Y):- X\=Y.
+
+% arbolAmplifcado/2
+arbolAmplificado(void,_).
+arbolAmplificado(tree(par(S,N),L,R),AAmp):-
+	subtree(L,N,LL),
+	subtree(R,N,LR),
+	AAmp = tree(par(S,N),LL,LR).
+
+subtree(void,_,void).
+subtree(tree(par(S,N),L,R),Root,STree):-
+	subtree(L,Root,L1),
+	subtree(R,Root,R1),
 	times(N,Root,Res),
-	AAmp = tree(par(X,Res),L1,L2).
+	STree = tree(par(S,Res),L1,R1).
 	
