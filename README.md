@@ -1,5 +1,8 @@
 # Prolog
-Programación Declarativa
+
+Repositorio para las prácticas de Programación Declarativa.
+
+Dejo un mini-manual para usar git :)
 
 #### Actualizar git
 
@@ -23,7 +26,7 @@ Subir un archivo al repositorio
 
 ``` git push origin master```
 
-##### Estado de tu proyecto
+#### Estado de tu proyecto
 
 Ver estado del proyecto en tu carpeta.
 
