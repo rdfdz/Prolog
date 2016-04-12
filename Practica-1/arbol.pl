@@ -27,19 +27,19 @@ arbolBalanceadoPar(tree(par(_,_),Left,Right)):-
 	cmp(Res1,Res2).
 
 leaf(void,_).
-leaf(tree(par(_,N1),Left,Right),RES):-
+leaf(tree(par(_,N1),Left,Right),Res):-
 	leaf(Left,Acc),
 	leaf(Right,Acc),
-	plus(Acc,N1,RES).
+	plus(Acc,N1,Res).
 
 cmp(X,Y):- X\=Y.
 
-% arbolAmplifcado/2
+% arbolAmplificado/2
 arbolAmplificado(void,_).
 arbolAmplificado(tree(par(S,N),L,R),AAmp):-
-	subtree(L,N,LL),
-	subtree(R,N,LR),
-	AAmp = tree(par(S,N),LL,LR).
+	subtree(L,N,LAmp),
+	subtree(R,N,RAmp),
+	AAmp = tree(par(S,N),LAmp,RAmp).
 
 subtree(void,_,void).
 subtree(tree(par(S,N),L,R),Root,STree):-
