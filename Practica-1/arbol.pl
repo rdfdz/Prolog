@@ -1,5 +1,7 @@
 :-module(_,_).
 
+
+% Funciones Adicionales
 nat(0).
 nat(s(X)):-nat(X).
 
@@ -18,7 +20,6 @@ times(X,0,0):-nat(X).
 times(X,s(Y),Z):- times(X,Y,Acc), plus(Acc,X,Z).
 
 
-
 % arbolBalanceadoPar/1 
 arbolBalanceadoPar(void).
 arbolBalanceadoPar(tree(par(_,_),Left,Right)):-
@@ -33,6 +34,7 @@ leaf(tree(par(_,N1),Left,Right),Res):-
 	plus(Acc,N1,Res).
 
 cmp(X,Y):- X\=Y.
+
 
 % arbolAmplificado/2
 arbolAmplificado(void,_).
