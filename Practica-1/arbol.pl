@@ -2,19 +2,17 @@
 
 
 arbolBalanceadoPar(void).
-arbolBalanceadoPar(tree(par(_,N),Left,Right)):-
-	leaf(Left,N,_),
-	leaf(Right,N,_).
+arbolBalanceadoPar(tree(par(_,_),Left,Right)):-
+	leaf(Left,Res1),
+	leaf(Right,Res2),
+	write(Res1),
+	write(Res2).
 
-leaf(void,_,_).
-leaf(tree(par(_,N),Left,Right),_,_):-
-	write(N),
-	leaf(Left,_,_),
-	leaf(Right,_,_).
-
-
-
-
+leaf(void,_).
+leaf(tree(par(_,N1),Left,Right),RES):-
+	leaf(Left,Acc),
+	leaf(Right,Acc),
+	plus(Acc,N1,RES).
 
 
 
