@@ -65,7 +65,7 @@ add_zeros(L,Res):- my_append([o],L,L2), my_append(L2,[o],Res).
 iterador([_,_],Acc,Acc).
 iterador([X,Y,Z|H],Acc,L):- regla(X,Y,Z,Res), my_append(Acc,[Res],NewAcc), iterador([Y,Z|H],NewAcc,L).
 
-% check_head/1
+% check_head/1 y check_tail/1
 % Verifica que los elementos de una lista empiecen por o,x y terminen por x,o.
 check_head([o,x|L]):- check_tail(L).
 check_tail([x,o|[]]).
