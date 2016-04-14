@@ -1,8 +1,17 @@
+% --------------------------------------------------------------
+% PRACTICA 1: PROGRAMACION DECLARATIVA
+%
+% autores:
+% Roberto Daniel Fernandez Castro
+% Maria Jose Alobuela Collaguazo
+% Gerald Renzo Martinez Alvaro
+%---------------------------------------------------------------
+
 :- ensure_loaded(automaton).
 
-%---------------------------------------------------------------
-% Implementaciones basicas para la realizacion de los predicados
-%---------------------------------------------------------------
+%----------------------------------------------------------------
+% IMPLEMENTACIONES BASICAS PARA LA REALIZACION DE LOS PREDICADOS
+%----------------------------------------------------------------
 
 % IMPLEMENTACIONES PARA PARTE 1:
 %-------------------------------
@@ -11,31 +20,6 @@
 % Concatena 2 listas, dejando el resultado en una lista.
 my_append([],X,X).
 my_append([X|Y],Z,[X|R]):- my_append(Y,Z,R).
-
-
-%--------------------------------------------------------------
-% Parte 1: cells
-%--------------------------------------------------------------
-
-% add_zeros/2
-%Añade un cero al principio y al final de la lista.
-add_zeros(L,Res):- my_append([o],L,L2), my_append(L2,[o],Res).
-
-% iterador/2
-%Recorre una lista, sustituyendo cada elemento por su correspondiente segun la regla, y almacenandolo en una nueva lista.  
-iterador([_,_],Acc,Acc).
-iterador([X,Y,Z|H],Acc,L):- regla(X,Y,Z,Res), my_append(Acc,[Res],NewAcc), iterador([Y,Z|H],NewAcc,L). % iterador
-
-%check_head/1
-%Verifica que los elementos de una lista empiecen por o,x y terminen por x,o.
-check_head([o,x|L]):- check_tail(L).
-check_tail([x,o|[]]).
-check_tail([_|L]):- check_tail(L).
-
-% cells/2
-%Dada una lista, se obtiene otra cuyos elementos son el resultado de aplicar las reglas del automata.
-cells(L1,L2):-  check_head(L1), add_zeros(L1,Res1),iterador(Res1,[],Res2), add_zeros(Res2,L2).
-
 
 
 % IMPLEMENTACIONES PARA PARTE 2:
@@ -68,17 +52,45 @@ times(X,s(Y),Z):- times(X,Y,Acc), plus(Acc,X,Z).
 
 
 %--------------------------------------------------------------
-% Parte 2: arbolBalanceadoPar y arbolAmplificado
+% PARTE 1: AUTOMATA CELULAR
+%--------------------------------------------------------------
+
+% add_zeros/2
+% Añade un cero al principio y al final de la lista.
+add_zeros(L,Res):- my_append([o],L,L2), my_append(L2,[o],Res).
+
+% iterador/2
+% Recorre una lista, sustituyendo cada elemento por su correspondiente segun la regla, 
+% y almacenandolo en una nueva lista.  
+iterador([_,_],Acc,Acc).
+iterador([X,Y,Z|H],Acc,L):- regla(X,Y,Z,Res), my_append(Acc,[Res],NewAcc), iterador([Y,Z|H],NewAcc,L).
+
+% check_head/1
+% Verifica que los elementos de una lista empiecen por o,x y terminen por x,o.
+check_head([o,x|L]):- check_tail(L).
+check_tail([x,o|[]]).
+check_tail([_|L]):- check_tail(L).
+
+% cells/2
+% Dada una lista, se obtiene otra, cuyos elementos son el resultado de aplicar las reglas del automata.
+cells(L1,L2):- check_head(L1), add_zeros(L1,Res1),iterador(Res1,[],Res2), add_zeros(Res2,L2).
+
+
+
+%--------------------------------------------------------------
+% PARTE 2: CODIFICACION HUFFMAN PLOG 
 %-------------------------------------------------------------
 
 % arbolBalanceadoPar/1 
-%Dado un arbol, se comprueba que la suma de los pesos pares de su arbol izquierdo es igual a la suma de los pesos pares de su arbol derecho.
+% Dado un arbol, se comprueba que la suma de los pesos pares de su arbol izquierdo es igual a la suma 
+% de los pesos pares de su arbol derecho.
 arbolBalanceadoPar(void).
 arbolBalanceadoPar(tree(par(_,_),Left,Right)):-
 	rama(Left,0,0,Res),
 	rama(Right,0,0,Res).
-%rama/4
-%Realiza la suma de los pesos pares del arbol.
+
+% rama/4
+% Realiza la suma de los pesos pares del arbol.
 rama(void,_,_,_).
 rama(tree(par(_,N),Left,Right),Acc1,Acc2,Res):-
 	mod(N,s(s(0)),0),
@@ -86,8 +98,8 @@ rama(tree(par(_,N),Left,Right),Acc1,Acc2,Res):-
 	rama(Right,Acc1,Acc2,Acc2),
 	plus(Acc1,Acc2,N1),
 	plus(N1,N,Res).
-%rama/4
-%Realiza la suma de los pesos impares del arbol.
+
+% Realiza la suma de los pesos impares del arbol.
 rama(tree(par(_,N),Left,Right),Acc1,Acc2,Res):-
 	mod(N,s(s(0)),s(0)),
 	rama(Left,Acc1,Acc2,Acc1),
@@ -96,14 +108,16 @@ rama(tree(par(_,N),Left,Right),Acc1,Acc2,Res):-
 	
 
 % arbolAmplificado/2
-%Dado un arbol, se incrementa el peso de los nodos en el numero de veces que indica la raiz del arbol origen.
+% Dado un arbol, se incrementa el peso de los nodos en el numero de veces que indica la raiz del arbol origen.
 arbolAmplificado(void,_).
 arbolAmplificado(tree(par(S,N),L,R),AAmp):-
 	subtree(L,N,LAmp),
 	subtree(R,N,RAmp),
 	AAmp = tree(par(S,N),LAmp,RAmp).
-%subtree/3
-%Recorre el hijo izquierdo y el hijo derecho del arbol origen, devolviendolos con el peso de los nodos amplificados.
+
+
+% subtree/3
+% Recorre el hijo izquierdo y el hijo derecho del arbol origen, devolviendolos con el peso de los nodos amplificados.
 subtree(void,_,void).
 subtree(tree(par(S,N),L,R),Root,STree):-
 	subtree(L,Root,L1),
