@@ -16,7 +16,7 @@
 % IMPLEMENTACIONES PARA PARTE 1:
 %-------------------------------
 
-% my_append/2
+% my_append/3
 % Concatena 2 listas, dejando el resultado en una lista.
 my_append([],X,X).
 my_append([X|Y],Z,[X|R]):- my_append(Y,Z,R).
@@ -59,7 +59,7 @@ times(X,s(Y),Z):- times(X,Y,Acc), plus(Acc,X,Z).
 % Añade un cero al principio y al final de la lista.
 add_zeros(L,Res):- my_append([o],L,L2), my_append(L2,[o],Res).
 
-% iterador/2
+% iterador/3
 % Recorre una lista, sustituyendo cada elemento por su correspondiente segun la regla, 
 % y almacenandolo en una nueva lista.  
 iterador([_,_],Acc,Acc).
