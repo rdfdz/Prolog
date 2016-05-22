@@ -18,12 +18,12 @@ dbNodo([X-Y|Z]):-
 	dbNodo(Z).
 
 hashmap(Element):-
+	write(Element),
 	\+(Element),        
 	assert(Element).
 hashmap(_).
 
 absoluto(X,Y,Z):- nodo(X,V1),nodo(Y,V2), Z is abs(V1-V2).
-
 
 
 
