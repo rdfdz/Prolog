@@ -11,7 +11,6 @@ permutation(Bs, [A|As]):-
 	permutation(Zs, As). 
 permutation([], []).
 
-immerse([]).
 immerse([buzo(B1,T1),buzo(B2,T2)|R]) :- 
 	T1>T2,
 	assert(pareja(B1,B2,T2)),
