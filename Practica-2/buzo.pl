@@ -27,7 +27,6 @@ immerse([buzo(B1,T1),buzo(B2,T2)|R]) :-
 immerse([buzo(B1,T1),buzo(B2,T2)|R]) :- 
 	T1=T2,
 	assert(pareja(B1,B2,T1)),
-	R \=[],
 	immerse(R),!.
 immerse(_):-!.
 
