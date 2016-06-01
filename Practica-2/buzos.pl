@@ -5,7 +5,6 @@
 
 :-dynamic pareja/3.
 
-
 immerse([buzo(B1,T1),buzo(B2,T2)|R],L,Length) :- 
 	T1>T2,
 	hashmap(B1,B2,T2,[buzo(B1,T1),buzo(B2,T2)|R],L,Length),
@@ -27,11 +26,9 @@ immerse(_,_,Length):-
 immerse([buzo(B1,T1)],List,Length):-
 	del(buzo(B1,_),List,Del),
 	append([buzo(B1,T1)],Del,NewList),
-	moveLast(Del,Move),
-	immerse(NewList,Move,Length),!.
+	immerse(NewList,Del,Length),!.
 immerse([],List,Length):-
-	moveLast(List,Move),
-	immerse(List,Move,Length),!.
+	immerse(List,List,Length),!.
 
 del(buzo(B,_),[buzo(B,_)|Tail],Tail):-!.
 del(buzo(B1,_),[buzo(B2,T2)|Tail],[buzo(B2,T2)|Tail1]):-
@@ -43,9 +40,6 @@ hashmap(B1,B2,T,_,_,_):-
 	assert(pareja(B1,B2,T)).
 hashmap(_,_,_,[buzo(B1,T1),buzo(_,_)|R],L,Length):-
 	immerse([buzo(B1,T1)|R],L,Length).
-
-moveLast([], []):-!.
-moveLast(L, [H|T]) :- append(T, [H], L).
 
 permutation(Bs, [A|As]):-
 	append(Xs, [A|Ys], Bs), 
@@ -72,8 +66,9 @@ reparacion(Equipo,Tiempo,OrdenParejas):-
 	sumlist(NumPareja,LenPareja),
 	immerse(Backtraking,Backtraking,LenPareja),
 	findall(T,pareja(_,_,T), LT),
-	sumlist(LT,Total), %write(LT),write(Sum),nl,
+	sumlist(LT,Total),
 	timecheck(Total,Tiempo),
-	findall(pareja(X,Y,Z),pareja(X,Y,Z),OrdenParejas).
+	findall(pareja(X,Y,Z),pareja(X,Y,Z),OrdenParejas),
+	retractall(pareja(_,_,_)).
 
 
