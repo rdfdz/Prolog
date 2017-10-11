@@ -1,10 +1,5 @@
 % --------------------------------------------------------------
-% PRACTICA 1: PROGRAMACION DECLARATIVA
-%
-% autores:
-% Roberto Daniel Fernandez Castro
-% Maria Jose Alobuela Collaguazo
-% Gerald Renzo Martinez Alvaro
+% PROGRAMACION DECLARATIVA
 %---------------------------------------------------------------
 
 :- ensure_loaded(automaton).
